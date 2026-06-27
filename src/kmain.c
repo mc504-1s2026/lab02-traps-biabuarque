@@ -15,6 +15,9 @@ void kmain()
 
 	info("enabling traps...\n");
 	trap_setup();
+	// FOR LATER: test serial
+	// serial_init();
+	// serial_irq_enable();
 	info("enabling timer...\n");
 	timer_irq_enable();
 	info("enabling serial...\n");
