@@ -3,6 +3,7 @@
 #include <arch/csr.h>
 #include <arch/timer.h>
 #include <kernel/serial.h>
+#include <arch/plic.h>
 
 /* defined in src/trap_entry.S */
 extern void trap_entry();
@@ -14,10 +15,16 @@ void handle_irq()
 		case TRAP_TIMER_IRQ:
 			timer_irq();
 			break;
-		case TRAP_EXTERNAL_IRQ:
-			serial_irq();
-			// TODO: PLIC
+		case TRAP_EXTERNAL_IRQ: {
+			u32 irq = plic_hart_claim_irq(0);
+			if (irq != 0){
+				if (irq == IRQ_SERIAL) {
+					serial_irq();
+				}
+				plic_hart_complete_irq(0, irq);
+			}
 			break;
+		}
 		default:
 			panic("unknown interrupt %lx :(", scause);
 			break;
