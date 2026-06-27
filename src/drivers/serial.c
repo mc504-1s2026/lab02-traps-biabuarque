@@ -7,7 +7,6 @@
 #include <arch/plic.h>
 #include <arch/csr.h>
 
-#define SERIAL_BUFFER_SIZE 256
 static struct {
 	char buffer[SERIAL_BUFFER_SIZE];
 	size_t len;
@@ -43,8 +42,8 @@ void serial_irq_enable()
 
 void serial_irq_disable()
 {
-	/* not implemented */
-	BUG();
+	iowrite8(0, serial_reg(SERIAL_IER)); // disable all serial interrupts
+	plic_hart_enable_irq(0, IRQ_SERIAL); // disable the irq for hart 0
 }
 
 void serial_irq()
