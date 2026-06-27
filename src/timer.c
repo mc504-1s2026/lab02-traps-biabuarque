@@ -1,6 +1,7 @@
 #include <arch/timer.h>
 #include <kernel/panic.h>
 #include <arch/csr.h>
+#include <kernel/serial.h>
 
 u64 timer_read()
 {
@@ -27,6 +28,5 @@ void timer_irq()
 	// disarms the alarm. we cant directly clear the timer checker so
 	csr_write(CSR_STIMECMP, ~0UL);
 	// print the alarm message
-	info("ring the alarm diva\n");
-	// for later: serial_puts("alarm\r\n");
+	serial_puts("alarm\r\n");
 }
