@@ -14,6 +14,7 @@
 #define IRQ_SERIAL	0xaUL
 
 #define SERIAL_BASE	((void*)0x10000000)
+#define SERIAL_BUFFER_SIZE 256
 
 /* https://courses.grainger.illinois.edu/ece391/su2025/docs/NS16550A.pdf */
 /* Receiver Buffer Register (read-only) */
