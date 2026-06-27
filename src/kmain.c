@@ -8,7 +8,10 @@
 extern int _hartid[];
 
 static void execute(char *line){
-	if (strcmp(line, "uptime") == 0){
+	if (line[0] == '\0') {
+		return;
+	}
+	else if (strcmp(line, "uptime") == 0){
 		char out[32];
 		snprintf(out, sizeof(out), "%lus\n", (timer_read() / TIMER_FREQ));
 		serial_puts(out);
